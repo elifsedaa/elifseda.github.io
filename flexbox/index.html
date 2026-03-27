@@ -11,144 +11,121 @@
 <div class="wrapper">
 
     <!-- 1) NAVBAR -->
-
-                <div class="nav-logo">LOGO</div>
-
     <nav class="navbar">
-                <div class="nav-logo">LOGO</div>
-
-<ul>
-<li><a href="index.html">Ana Sayfa</a></li>
-<li><a href="about.html">Hakkımda</a></li>
-<li><a href="interests.html">İlgi Alanlarım</a></li>
-<li><a href="contact.html">İletişim</a></li>
-<li><a href="flexbox/">Flexbox Ödevi</a></li>
-
-</ul>
-</nav>
-
-
-
+        <div class="nav-logo">Elif Seda Demirhan</div>
+        <ul class="nav-links">
+            <li><a href="../index.html">← Portfolyoya Dön</a></li>
+            <li><a href="../about.html">Hakkımda</a></li>
+            <li><a href="../interests.html">İlgi Alanlarım</a></li>
+            <li><a href="../contact.html">İletişim</a></li>
+        </ul>
+    </nav>
 
     <!-- 2) HERO -->
     <section class="hero">
         <div class="hero-text">
-            <h1>Hero Başlık</h1>
-            <p>Açıklama metni</p>
+            <h1>Elif Seda Demirhan</h1>
+            <p>Bilgisayar Mühendisliği Öğrencisi · Yapay Zeka & Veri Bilimi</p>
             <hr>
-            <button class="btn">Buton</button>
+            <a href="../contact.html" class="btn">İletişime Geç</a>
         </div>
         <div class="hero-image">
-            <!-- Placeholder görsel -->
             <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
-                <rect width="200" height="140" fill="#e0e0e0" rx="8"/>
-                <circle cx="75" cy="55" r="20" fill="#bdbdbd"/>
-                <polygon points="20,120 80,60 130,100 160,70 200,120" fill="#bdbdbd"/>
+                <rect width="200" height="140" fill="#e0e8f5" rx="8"/>
+                <circle cx="100" cy="55" r="28" fill="#6c8ebf"/>
+                <rect x="55" y="95" width="90" height="35" rx="6" fill="#6c8ebf" opacity="0.5"/>
+                <text x="100" y="118" text-anchor="middle" fill="white" font-size="11" font-family="Segoe UI">ESD</text>
             </svg>
         </div>
     </section>
 
-    <!-- 3) KARTLAR -->
+    <!-- 3) KARTLAR - Projeler -->
     <section class="cards-section">
         <div class="cards-header">
-            <h2>Kartlar Bölümü</h2>
-            <div class="tags">
-                <span class="tag">multiple items</span>
-                <span class="tag">flex layout · wrap</span>
-            </div>
+            <h2>Projeler</h2>
         </div>
         <div class="cards-container">
             <div class="card">
-                <h3>Kart Başlığı</h3>
-                <p>Kısa açıklama</p>
-                <button class="btn">Buton</button>
+                <h3>Klinik NER Sistemi</h3>
+                <p>BioBERT & ClinicalBERT ensemble ile %93.2 F1-score</p>
+                <a href="https://github.com/elifsedaa" target="_blank" class="btn">GitHub</a>
             </div>
             <div class="card">
-                <h3>Kart Başlığı</h3>
-                <p>Kısa açıklama</p>
-                <button class="btn">Buton</button>
+                <h3>Sakarya Açık Veri Portalı</h3>
+                <p>CKAN & Docker tabanlı, Bakanlık tarafından yayınlandı</p>
+                <a href="https://ulasav.csb.gov.tr/" target="_blank" class="btn">Görüntüle</a>
             </div>
             <div class="card">
-                <h3>Kart Başlığı</h3>
-                <p>Kısa açıklama</p>
-                <button class="btn">Buton</button>
+                <h3>Sakarya Şehir Ansiklopedisi</h3>
+                <p>Angular tabanlı responsive frontend, açık kaynak</p>
+                <a href="https://github.com/elifsedaa/ansiklopedi-sbb" target="_blank" class="btn">GitHub</a>
             </div>
             <div class="card">
-                <h3>Kart Başlığı</h3>
-                <p>Kısa açıklama</p>
-                <button class="btn">Buton</button>
+                <h3>Satış Tahmini API</h3>
+                <p>FastAPI + PostgreSQL + Northwind veri seti</p>
+                <a href="https://github.com/elifsedaa" target="_blank" class="btn">GitHub</a>
             </div>
             <div class="card">
-                <h3>Kart Başlığı</h3>
-                <p>Kısa açıklama</p>
-                <button class="btn">Buton</button>
+                <h3>Portfolyo Sitesi</h3>
+                <p>HTML & CSS ile hazırlanmış kişisel portfolyo</p>
+                <a href="../index.html" class="btn">Görüntüle</a>
             </div>
             <div class="card">
-                <h3>Kart Başlığı</h3>
-                <p>Kısa açıklama</p>
-                <button class="btn">Buton</button>
+                <h3>Flexbox Lab</h3>
+                <p>Web Programlama dersi Flexbox uygulaması</p>
+                <a href="#" class="btn">Bu Sayfa</a>
             </div>
         </div>
     </section>
 
-    <!-- 4) FLEX GROW (Butonlu versiyon) -->
+    <!-- 4) FLEX GROW - Yetenekler -->
     <section class="flex-grow-section">
         <div class="section-header">
-            <h2>Flex Grow Uygulama</h2>
-            <div class="tags">
-                <span class="tag">flex-grow</span>
-                <span class="tag">height: 20vh</span>
-                <span class="tag">stretch (esneme)</span>
-            </div>
+            <h2>Uzmanlık Alanları</h2>
         </div>
         <div class="grow-container">
             <div class="grow-box grow-blue">
-                <strong>1 Kutu</strong>
-                <small>flex-grow: 1;</small>
-                <button class="btn btn-white">Buton</button>
+                <strong>Yapay Zeka & Veri</strong>
+                <small>Python · TensorFlow · Scikit-learn · Pandas · NLP</small>
+                <a href="../about.html" class="btn btn-white">Detay</a>
             </div>
             <div class="grow-box grow-green">
-                <strong>2 Kutu</strong>
-                <small>flex-grow: 2;</small>
-                <button class="btn btn-white">Buton</button>
+                <strong>Web & Backend Geliştirme</strong>
+                <small>Angular · HTML · CSS · ASP.NET Core · FastAPI · PostgreSQL</small>
+                <a href="../about.html" class="btn btn-white">Detay</a>
             </div>
             <div class="grow-box grow-orange">
-                <strong>3 Kutu</strong>
-                <small>flex-grow: 1;</small>
-                <button class="btn btn-white">Buton</button>
+                <strong>Araçlar & Diğer</strong>
+                <small>Git · Docker · Postman · Flutter · Java · C#</small>
+                <a href="../about.html" class="btn btn-white">Detay</a>
             </div>
         </div>
     </section>
 
-    <!-- 4b) FLEX GROW (Sadece kutular) -->
+    <!-- 4b) FLEX GROW - Deneyim özeti -->
     <section class="flex-grow-section flex-grow-simple">
         <div class="section-header">
-            <h2>Flex Grow Uygulama</h2>
-            <div class="tags">
-                <span class="tag">flex-grow</span>
-                <span class="tag">height: 20vh</span>
-                <span class="tag">stretch (esneme)</span>
-            </div>
+            <h2>Deneyim & Eğitim</h2>
         </div>
         <div class="grow-container">
             <div class="grow-box grow-blue simple">
-                <strong>1 Kutu</strong>
-                <small>flex-grow: 1;</small>
+                <strong>Başlangıç Noktası - Eczacıbaşı</strong>
+                <small>01.2026 · devam ediyor</small>
             </div>
             <div class="grow-box grow-green simple">
-                <strong>2 Kutu</strong>
-                <small>flex-grow: 2;</small>
+                <strong>Sakarya Büyükşehir Belediyesi</strong>
+                <small>Yazılım Şube Müdürlüğü · 07.2025 - 09.2025</small>
             </div>
             <div class="grow-box grow-orange simple">
-                <strong>3 Kutu</strong>
-                <small>flex-grow: 1;</small>
+                <strong>Marmara Üniversitesi</strong>
+                <small>Bilgisayar Mühendisliği · 2023 - devam</small>
             </div>
         </div>
     </section>
 
     <!-- 5) FOOTER -->
     <footer class="footer">
-        <p>© 2026 - Temel Flexbox Örneği</p>
+        <p>© 2026 - Elif Seda Demirhan &nbsp;|&nbsp; <a href="../index.html">Portfolyoya Dön</a></p>
     </footer>
 
 </div>
