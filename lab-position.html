@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yapay Zeka Topluluğu Etkinliği - Elif Seda Demirhan</title>
+  <style>
+    /* ── RESET & BASE ────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple-light: #c5b8f8;
+      --purple-mid:   #a594f9;
+      --purple-dark:  #6c3fd4;
+      --blue-soft:    #dce8ff;
+      --pink-soft:    #ffdde8;
+      --yellow-soft:  #fffacd;
+      --green-soft:   #d6f5e3;
+      --text-dark:    #1e1b3a;
+      --text-mid:     #4a4470;
+      --text-light:   #7b75a8;
+      --white:        #ffffff;
+      --bg:           #f0eff8;
+      --card-bg:      linear-gradient(135deg, #e8e2ff 0%, #d0c6fb 40%, #e0d8ff 70%, #f0eaff 100%);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── FIXED: Ana Sayfa Butonu (sol üst) ─────────────── */
+    .btn-home {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: var(--purple-dark);
+      color: var(--white);
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      transition: background 0.25s, transform 0.2s;
+      cursor: pointer;
+    }
+    .btn-home:hover {
+      background: #5230b0;
+      transform: translateY(-2px);
+      cursor: pointer;
+    }
+    .btn-home:active {
+      transform: scale(0.96);
+    }
+
+    /* ── FIXED: Yardımcı Menü (sağ alt) ────────────────── */
+    .fixed-helper {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 1000;
+      background: var(--purple-mid);
+      color: var(--white);
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 4px 20px rgba(108, 63, 212, 0.35);
+      cursor: pointer;
+      transition: box-shadow 0.3s, transform 0.3s;
+      animation: floatBtn 3s ease-in-out infinite;
+    }
+    .fixed-helper:hover {
+      box-shadow: 0 6px 28px rgba(108, 63, 212, 0.55);
+      transform: translateY(-4px);
+      cursor: pointer;
+    }
+    @keyframes floatBtn {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    /* ── PAGE LAYOUT ────────────────────────────────────── */
+    .page-wrapper {
+      width: 100%;
+      max-width: 760px;
+      padding: 100px 24px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    /* ── MAIN CARD (position: relative kapsayıcı) ───────── */
+    .announcement-card {
+      position: relative;          /* ← RELATIVE kapsayıcı */
+      width: 100%;
+      min-height: 420px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 48px 44px 80px;
+      box-shadow: 0 8px 40px rgba(108, 63, 212, 0.18);
+      overflow: visible;
+      transition: box-shadow 0.3s;
+    }
+    .announcement-card:hover {
+      box-shadow: 0 12px 50px rgba(108, 63, 212, 0.28);
+      cursor: default;
+    }
+
+    /* Dekoratif arka plan dairesi */
+    .card-circle {
+      position: absolute;         /* ← ABSOLUTE öğe 1 */
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.28);
+      z-index: 0;
+    }
+
+    /* Kart içeriği z-index ile üstte */
+    .card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-mid);
+      max-width: 420px;
+    }
+
+    /* ── ABSOLUTE BADGE 1: Ücretsiz (sol üst) ──────────── */
+    .badge-free {
+      position: absolute;         /* ← ABSOLUTE öğe 2 */
+      top: 22px;
+      left: 28px;
+      z-index: 10;
+      background: var(--yellow-soft);
+      color: #6b5800;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1.5px solid #f0d800;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .badge-free:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 14px rgba(240, 180, 0, 0.35);
+      cursor: pointer;
+    }
+
+    /* ── ABSOLUTE BADGE 2: Tarih (sağ üst) ─────────────── */
+    .badge-date {
+      position: absolute;         /* ← ABSOLUTE öğe 3 */
+      top: 22px;
+      right: 28px;
+      z-index: 10;
+      background: var(--green-soft);
+      color: #1a5e35;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1.5px solid #72e0a0;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: pulseBadge 2.5s ease-in-out infinite;
+    }
+    .badge-date:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 14px rgba(50, 180, 100, 0.35);
+      cursor: pointer;
+    }
+    @keyframes pulseBadge {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(50,180,100,0.3); }
+      50%       { box-shadow: 0 0 0 6px rgba(50,180,100,0); }
+    }
+
+    /* ── ABSOLUTE INFO BOX: Konum (orta alt) ───────────── */
+    .badge-location {
+      position: absolute;         /* ← ABSOLUTE öğe 4 */
+      bottom: 60px;
+      right: 44px;
+      z-index: 10;
+      background: rgba(255,255,255,0.85);
+      color: var(--text-mid);
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(165,148,249,0.4);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .badge-location:hover {
+      background: rgba(255,255,255,1);
+      transform: translateY(-3px);
+      cursor: pointer;
+    }
+
+    /* ── ABSOLUTE SON KAYIT etiketi (sağ alt köşe) ──────── */
+    .badge-deadline {
+      position: absolute;         /* ← ABSOLUTE öğe 5 */
+      bottom: 22px;
+      right: 28px;
+      z-index: 11;                /* z-index kullanımı */
+      background: var(--pink-soft);
+      color: #8b2252;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1.5px solid #f0a0c8;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.25s;
+    }
+    .badge-deadline:hover {
+      transform: scale(1.08);
+      background: #ffc8e0;
+      cursor: pointer;
+    }
+    .badge-deadline:active {
+      transform: scale(0.94);
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-light);
+      padding: 10px 0 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIXED: Ana Sayfa Butonu -->
+  <a href="index.html" class="btn-home">← Ana Sayfaya Dön</a>
+
+  <!-- FIXED: Yardımcı Menü -->
+  <div class="fixed-helper">Etkinliğe Kaydol</div>
+
+  <div class="page-wrapper">
+
+    <!-- MAIN CARD (position: relative) -->
+    <div class="announcement-card">
+
+      <!-- Dekoratif daire (absolute 1) -->
+      <div class="card-circle"></div>
+
+      <!-- ABSOLUTE BADGE 1: Ücretsiz -->
+      <div class="badge-free">Ücretsiz</div>
+
+      <!-- ABSOLUTE BADGE 2: Tarih -->
+      <div class="badge-date">24 Nisan</div>
+
+      <!-- Kart İçeriği -->
+      <div class="card-content">
+        <h1 class="card-title">Yapay Zeka &amp;<br>Veri Bilimi Etkinliği</h1>
+        <p class="card-desc">
+          Bu etkinlik; Marmara Üniversitesi Bilgisayar Mühendisliği öğrencileri için
+          düzenlenen yıllık AI &amp; Data Science buluşmasıdır.
+          Makine öğrenmesi, derin öğrenme ve veri görselleştirme üzerine
+          sunumlar, workshop'lar ve networking fırsatları sunulmaktadır.
+        </p>
+      </div>
+
+      <!-- ABSOLUTE INFO BOX: Konum (absolute 4) -->
+      <div class="badge-location">📍 Konum: Mühendislik Fakültesi, B-101</div>
+
+      <!-- ABSOLUTE BADGE: Son Kayıt (absolute 5) -->
+      <div class="badge-deadline">Son Kayıt: 20 Nisan</div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      2026 &mdash; Elif Seda Demirhan · LAB Position Çalışması
+    </footer>
+
+  </div>
+
+</body>
+</html>
