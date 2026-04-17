@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Öğrenci Not Hesaplama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --accent: #2563eb;
+      --accent2: #1d4ed8;
+      --text: #1e293b;
+      --sub: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --fail: #dc2626;
+      --result-bg: #f8fafc;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      color: var(--text);
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: var(--sub);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      background: #fff;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover { background: var(--accent2); }
+    button:active { transform: scale(0.98); }
+
+    .result-box {
+      display: none;
+      margin-top: 1.75rem;
+      background: var(--result-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .result-box.show { display: block; }
+
+    .result-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .result-row {
+      font-size: 0.9rem;
+      color: var(--sub);
+      margin-bottom: 0.35rem;
+    }
+
+    .result-row span {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .durum {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .gecti { background: #dcfce7; color: var(--success); }
+    .kaldi { background: #fee2e2; color: var(--fail); }
+
+    .error {
+      color: var(--fail);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Öğrenci Not Hesaplama</h1>
+    <p class="subtitle">Vize %40 + Final %60 ağırlıklı ortalama</p>
+
+    <div class="form-group">
+      <label>Ad Soyad</label>
+      <input type="text" id="adSoyad" placeholder="Örn: Elif Seda Demirhan" />
+    </div>
+    <div class="form-group">
+      <label>Vize Notu (0–100)</label>
+      <input type="number" id="vize" placeholder="0 – 100" min="0" max="100" />
+    </div>
+    <div class="form-group">
+      <label>Final Notu (0–100)</label>
+      <input type="number" id="final" placeholder="0 – 100" min="0" max="100" />
+    </div>
+
+    <p class="error" id="errorMsg">Lütfen tüm alanları eksiksiz doldurun (0–100 arası).</p>
+
+    <button onclick="hesapla()">Hesapla</button>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-name" id="rName"></div>
+      <div class="result-row">Ortalama: <span id="rOrt"></span></div>
+      <div class="result-row">Harf Notu: <span id="rHarf"></span></div>
+      <div>
+        <span class="durum" id="rDurum"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function harfNotu(ort) {
+      if (ort >= 90) return 'AA';
+      if (ort >= 85) return 'BA';
+      if (ort >= 80) return 'BB';
+      if (ort >= 75) return 'CB';
+      if (ort >= 70) return 'CC';
+      if (ort >= 65) return 'DC';
+      if (ort >= 60) return 'DD';
+      if (ort >= 50) return 'FD';
+      return 'FF';
+    }
+
+    function hesapla() {
+      const ad = document.getElementById('adSoyad').value.trim();
+      const vize = parseFloat(document.getElementById('vize').value);
+      const final = parseFloat(document.getElementById('final').value);
+      const err = document.getElementById('errorMsg');
+      const box = document.getElementById('resultBox');
+
+      if (!ad || isNaN(vize) || isNaN(final) || vize < 0 || vize > 100 || final < 0 || final > 100) {
+        err.style.display = 'block';
+        box.classList.remove('show');
+        return;
+      }
+
+      err.style.display = 'none';
+
+      const ort = vize * 0.4 + final * 0.6;
+      const harf = harfNotu(ort);
+      const durum = ort >= 50 ? 'Geçti' : 'Kaldı';
+
+      document.getElementById('rName').textContent = ad;
+      document.getElementById('rOrt').textContent = ort.toFixed(2);
+      document.getElementById('rHarf').textContent = harf;
+
+      const durumEl = document.getElementById('rDurum');
+      durumEl.textContent = durum;
+      durumEl.className = 'durum ' + (durum === 'Geçti' ? 'gecti' : 'kaldi');
+
+      box.classList.add('show');
+    }
+
+    // Enter ile de çalışsın
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') hesapla(); });
+  </script>
+</body>
+</html>

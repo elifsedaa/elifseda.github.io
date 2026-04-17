@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birim Dönüştürücü</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --accent: #2563eb;
+      --accent2: #1d4ed8;
+      --text: #1e293b;
+      --sub: #64748b;
+      --border: #e2e8f0;
+      --result-bg: #f0fdf4;
+      --result-border: #bbf7d0;
+      --result-text: #166534;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      color: var(--text);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: var(--sub);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      background: #fff;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    input:focus { border-color: var(--accent); }
+
+    select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+    }
+
+    select:focus { border-color: var(--accent); }
+
+    .optgroup-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--sub);
+      text-transform: uppercase;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.25rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover { background: var(--accent2); }
+    button:active { transform: scale(0.98); }
+
+    .result-box {
+      display: none;
+      margin-top: 1.75rem;
+      background: var(--result-bg);
+      border: 1.5px solid var(--result-border);
+      border-radius: 12px;
+      padding: 1.1rem 1.5rem;
+      text-align: center;
+    }
+
+    .result-box.show { display: block; }
+
+    .result-label {
+      font-size: 0.8rem;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.3rem;
+    }
+
+    .result-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--result-text);
+    }
+
+    .error {
+      color: #dc2626;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Birim Dönüştürücü</h1>
+    <p class="subtitle">Sıcaklık · Uzunluk · Kütle · Hacim</p>
+
+    <div class="form-group">
+      <label>Değer Giriniz</label>
+      <input type="number" id="deger" placeholder="Örn: 50" />
+    </div>
+
+    <div class="form-group">
+      <label>Dönüşüm Tipi</label>
+      <select id="donusumTipi">
+        <optgroup label="🌡️ Sıcaklık">
+          <option value="c2f">Celsius → Fahrenheit</option>
+          <option value="c2k">Celsius → Kelvin</option>
+          <option value="f2c">Fahrenheit → Celsius</option>
+          <option value="f2k">Fahrenheit → Kelvin</option>
+          <option value="k2c">Kelvin → Celsius</option>
+          <option value="k2f">Kelvin → Fahrenheit</option>
+        </optgroup>
+        <optgroup label="📏 Uzunluk">
+          <option value="m2km">Metre → Kilometre</option>
+          <option value="m2mi">Metre → Mil</option>
+          <option value="km2m">Kilometre → Metre</option>
+          <option value="km2mi">Kilometre → Mil</option>
+          <option value="mi2m">Mil → Metre</option>
+          <option value="mi2km">Mil → Kilometre</option>
+        </optgroup>
+        <optgroup label="⚖️ Kütle">
+          <option value="kg2g">Kilogram → Gram</option>
+          <option value="kg2lb">Kilogram → Pound</option>
+          <option value="g2kg">Gram → Kilogram</option>
+          <option value="lb2kg">Pound → Kilogram</option>
+        </optgroup>
+        <optgroup label="🧪 Hacim">
+          <option value="l2ml">Litre → Mililitre</option>
+          <option value="ml2l">Mililitre → Litre</option>
+          <option value="l2gal">Litre → Galon</option>
+          <option value="gal2l">Galon → Litre</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <p class="error" id="errorMsg">Lütfen geçerli bir sayı girin.</p>
+
+    <button onclick="donustur()">Hesapla</button>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-label">Sonuç</div>
+      <div class="result-value" id="sonuc"></div>
+    </div>
+  </div>
+
+  <script>
+    const donusumler = {
+      // Sıcaklık
+      c2f:  v => v * 9/5 + 32,
+      c2k:  v => v + 273.15,
+      f2c:  v => (v - 32) * 5/9,
+      f2k:  v => (v - 32) * 5/9 + 273.15,
+      k2c:  v => v - 273.15,
+      k2f:  v => (v - 273.15) * 9/5 + 32,
+      // Uzunluk
+      m2km: v => v / 1000,
+      m2mi: v => v / 1609.344,
+      km2m: v => v * 1000,
+      km2mi:v => v / 1.60934,
+      mi2m: v => v * 1609.344,
+      mi2km:v => v * 1.60934,
+      // Kütle
+      kg2g: v => v * 1000,
+      kg2lb:v => v * 2.20462,
+      g2kg: v => v / 1000,
+      lb2kg:v => v / 2.20462,
+      // Hacim
+      l2ml: v => v * 1000,
+      ml2l: v => v / 1000,
+      l2gal:v => v / 3.78541,
+      gal2l:v => v * 3.78541,
+    };
+
+    const birimler = {
+      c2f:'°F', c2k:'K', f2c:'°C', f2k:'K', k2c:'°C', k2f:'°F',
+      m2km:'km', m2mi:'mi', km2m:'m', km2mi:'mi', mi2m:'m', mi2km:'km',
+      kg2g:'g', kg2lb:'lb', g2kg:'kg', lb2kg:'kg',
+      l2ml:'mL', ml2l:'L', l2gal:'gal', gal2l:'L',
+    };
+
+    function donustur() {
+      const val = parseFloat(document.getElementById('deger').value);
+      const tip = document.getElementById('donusumTipi').value;
+      const err = document.getElementById('errorMsg');
+      const box = document.getElementById('resultBox');
+
+      if (isNaN(val)) {
+        err.style.display = 'block';
+        box.classList.remove('show');
+        return;
+      }
+
+      err.style.display = 'none';
+      const sonuc = donusumler[tip](val);
+      const birim = birimler[tip];
+
+      // Güzel sayı biçimlendirme
+      const formatted = Number.isInteger(sonuc)
+        ? sonuc.toLocaleString('tr-TR')
+        : parseFloat(sonuc.toFixed(4)).toLocaleString('tr-TR');
+
+      document.getElementById('sonuc').textContent = formatted + ' ' + birim;
+      box.classList.add('show');
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') donustur(); });
+  </script>
+</body>
+</html>
