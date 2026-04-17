@@ -359,7 +359,6 @@
 </head>
 <body>
 
-<!-- ── NAV ── -->
 <nav>
   <a class="nav-brand" href="https://elifsedaa.github.io/index.html">Elif Seda Demirhan</a>
   <ul class="nav-links">
@@ -373,7 +372,6 @@
   </ul>
 </nav>
 
-<!-- ── SAYFA BAŞLIĞI + TABS ── -->
 <div class="page-header">
   <div class="breadcrumb">
     <a href="https://elifsedaa.github.io/index.html">Ana Sayfa</a> › Lab 2
@@ -382,19 +380,17 @@
   <p>Web Programlama Laboratuvarı · Öğrenci Not Hesaplama & Birim Dönüştürücü</p>
 
   <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('not', this)">📊 Not Hesaplama</button>
-    <button class="tab-btn" onclick="switchTab('birim', this)">🔄 Birim Dönüştürücü</button>
+    <button class="tab-btn active" onclick="switchTab('not', this)">Not Hesaplama</button>
+    <button class="tab-btn" onclick="switchTab('birim', this)">Birim Dönüştürücü</button>
   </div>
 </div>
 
-<!-- ── İÇERİK ── -->
 <main>
   <div class="container">
 
-    <!-- TAB 1 — ÖĞRENCİ NOT HESAPLAMA -->
     <div class="tab-panel active" id="tab-not">
       <div class="card">
-        <div class="card-title">📋 Öğrenci Bilgileri</div>
+        <div class="card-title">Öğrenci Bilgileri</div>
 
         <div class="form-group">
           <label>Ad Soyad</label>
@@ -412,7 +408,7 @@
           </div>
         </div>
 
-        <div id="not-error" class="error-msg">⚠ Lütfen tüm alanları doldurun. Notlar 0–100 arasında olmalıdır.</div>
+        <div id="not-error" class="error-msg">Lütfen tüm alanları doldurun. Notlar 0–100 arasında olmalıdır.</div>
 
         <div style="margin-top:0.5rem;">
           <button class="btn btn-primary" onclick="hesaplaBot()">Hesapla</button>
@@ -447,9 +443,8 @@
         </div>
       </div>
 
-      <!-- Harf notu tablosu referans -->
       <div class="card">
-        <div class="card-title">📌 Harf Notu Skalası</div>
+        <div class="card-title">Harf Notu Skalası</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:0.5rem;font-size:0.85rem;">
           <div style="text-align:center;padding:0.5rem;background:var(--surface2);border-radius:8px;"><span style="color:var(--success);font-weight:700;">AA</span><br><span style="color:var(--muted);">90–100</span></div>
           <div style="text-align:center;padding:0.5rem;background:var(--surface2);border-radius:8px;"><span style="color:var(--success);font-weight:700;">BA</span><br><span style="color:var(--muted);">85–89</span></div>
@@ -462,27 +457,23 @@
           <div style="text-align:center;padding:0.5rem;background:var(--surface2);border-radius:8px;"><span style="color:var(--danger);font-weight:700;">FF</span><br><span style="color:var(--muted);">0–49</span></div>
         </div>
       </div>
-    </div><!-- /tab-not -->
-
-
-    <!-- TAB 2 — BİRİM DÖNÜŞTÜRÜCÜ -->
-    <div class="tab-panel" id="tab-birim">
+    </div><div class="tab-panel" id="tab-birim">
       <div class="card">
-        <div class="card-title">⚙️ Kategori Seç</div>
+        <div class="card-title">Kategori Seç</div>
 
         <div class="form-group">
           <label>Dönüşüm Kategorisi</label>
           <select id="kategori" onchange="kategoriDegis()">
-            <option value="sicaklik">🌡 Sıcaklık</option>
-            <option value="uzunluk">📏 Uzunluk</option>
-            <option value="kutle">⚖️ Kütle</option>
-            <option value="hacim">🧪 Hacim</option>
+            <option value="sicaklik">Sıcaklık</option>
+            <option value="uzunluk">Uzunluk</option>
+            <option value="kutle">Kütle</option>
+            <option value="hacim">Hacim</option>
           </select>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title" id="birim-title">🌡 Sıcaklık Dönüştürücü</div>
+        <div class="card-title" id="birim-title">Sıcaklık Dönüştürücü</div>
 
         <div class="form-group">
           <label>Değer</label>
@@ -501,17 +492,14 @@
           </div>
         </div>
 
-        <div id="birim-error" class="error-msg">⚠ Lütfen geçerli bir sayı girin.</div>
+        <div id="birim-error" class="error-msg">Lütfen geçerli bir sayı girin.</div>
 
         <div class="big-result" id="birim-result" style="display:none;">
           <div class="number" id="b-sonuc">—</div>
           <div class="unit-label" id="b-label">—</div>
         </div>
       </div>
-    </div><!-- /tab-birim -->
-
-  </div><!-- /container -->
-</main>
+    </div></div></main>
 
 <footer>
   © 2026 Elif Seda Demirhan — Web Programlama Laboratuvarı Lab 2
@@ -612,10 +600,10 @@ const birimler = {
 };
 
 const titles = {
-  sicaklik: '🌡 Sıcaklık Dönüştürücü',
-  uzunluk:  '📏 Uzunluk Dönüştürücü',
-  kutle:    '⚖️ Kütle Dönüştürücü',
-  hacim:    '🧪 Hacim Dönüştürücü',
+  sicaklik: 'Sıcaklık Dönüştürücü',
+  uzunluk:  'Uzunluk Dönüştürücü',
+  kutle:    'Kütle Dönüştürücü',
+  hacim:    'Hacim Dönüştürücü',
 };
 
 function kategoriDegis() {
