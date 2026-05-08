@@ -542,7 +542,7 @@
         <div class="counter-value" id="visit-count">0</div>
         <p>Farklı Controller'lara toplam geçiş sayısı. Her navigasyon Controller'ı tetikler, Controller modeli günceller, view yeniden render edilir.</p>
         <div class="btn-row">
-          <button class="btn btn-dark" onclick="HomeController.manualIncrement()">Artir</button>
+          <button class="btn btn-dark" onclick="HomeController.increment()">Artir</button>
           <button class="btn" onclick="HomeController.reset()">Sifirla</button>
         </div>
       </div>
@@ -688,87 +688,127 @@
 </div>
 
 <script>
-  // ════════════════════════════════
+  // ════════════════════════════════════════════════════════
   // MODEL KATMANI
-  // ════════════════════════════════
-  const Model = {
-    user: {
-      name: 'Elif Seda Demirhan',
-      uni: 'Marmara Universitesi',
-      dept: 'Bilgisayar Muhendisligi'
-    },
-    about: {
-      skills: ['HTML', 'CSS', 'JavaScript', 'Python', 'Machine Learning', 'Data Science', 'Git', 'SQL']
-    },
-    contact: {
-      submitted: false,
-      lastMessage: null
-    },
-    privacy: {
-      analytics: true,
-      cookies: true,
-      email: false
-    },
-    navigation: {
-      current: 'home',
-      visitCount: 0
+  // Sadece veri tutar. Ne controller ne view bilir.
+  // ════════════════════════════════════════════════════════
+  const UserModel = {
+    name: 'Elif Seda Demirhan',
+    uni: 'Marmara Universitesi',
+    dept: 'Bilgisayar Muhendisligi',
+    visitCount: 0
+  };
+
+  const AboutModel = {
+    skills: ['HTML', 'CSS', 'JavaScript', 'Python', 'Machine Learning', 'Data Science', 'Git', 'SQL'],
+    timeline: [
+      { year: '2022 — devam ediyor', text: 'Marmara Universitesi — Bilgisayar Muhendisligi' },
+      { year: '2018 — 2022',         text: 'Lise Egitimi' }
+    ]
+  };
+
+  const ContactModel = {
+    submitted: false,
+    name: '', email: '', subject: '', message: ''
+  };
+
+  const PrivacyModel = {
+    analytics: true,
+    cookies: true,
+    email: false
+  };
+
+  // ════════════════════════════════════════════════════════
+  // VIEW KATMANI
+  // Controller'dan gelen modeli alır, DOM'a yazar.
+  // Controller'ı tanımaz. Sadece render() alır, çizer.
+  // ════════════════════════════════════════════════════════
+  const HomeView = {
+    render(model) {
+      document.getElementById('home-name').textContent        = model.name;
+      document.getElementById('home-uni').textContent         = model.uni;
+      document.getElementById('home-dept').textContent        = model.dept;
+      document.getElementById('home-active-view').textContent = 'Home';
+      document.getElementById('visit-count').textContent      = model.visitCount;
     }
   };
 
-  // ════════════════════════════════
-  // HOME CONTROLLER
-  // ════════════════════════════════
+  const AboutView = {
+    render(model) {
+      document.getElementById('skill-list').innerHTML =
+        model.skills.map(s => `<li>${s}</li>`).join('');
+    }
+  };
+
+  const ContactView = {
+    render(model) {
+      const banner = document.getElementById('contact-success');
+      if (model.submitted) {
+        banner.classList.add('show');
+        document.getElementById('f-name').value    = '';
+        document.getElementById('f-email').value   = '';
+        document.getElementById('f-subject').value = '';
+        document.getElementById('f-message').value = '';
+      } else {
+        banner.classList.remove('show');
+      }
+    }
+  };
+
+  const PrivacyView = {
+    render(model) {
+      document.getElementById('pref-analytics').checked = model.analytics;
+      document.getElementById('pref-cookies').checked   = model.cookies;
+      document.getElementById('pref-email').checked     = model.email;
+    },
+    showSaved() {
+      const el = document.getElementById('save-confirm');
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2000);
+    }
+  };
+
+  // ════════════════════════════════════════════════════════
+  // CONTROLLER KATMANI
+  // İş mantığını yürütür, modeli günceller,
+  // sonra return View(model) — yani ilgili view'ı çağırır.
+  // DOM'a hiç dokunmaz.
+  // ════════════════════════════════════════════════════════
   const HomeController = {
     index() {
-      Model.navigation.current = 'home';
-      Model.navigation.visitCount++;
-      this.render();
-      updateBar('HomeController.Index()', 'home', 'UserModel { name, uni, dept }');
+      // modeli güncelle
+      UserModel.visitCount++;
+      // return View(UserModel)
+      HomeView.render(UserModel);
+      updateBar('HomeController.Index()', 'Home', 'UserModel');
     },
-    manualIncrement() {
-      Model.navigation.visitCount++;
-      document.getElementById('visit-count').textContent = Model.navigation.visitCount;
+    increment() {
+      UserModel.visitCount++;
+      HomeView.render(UserModel);
+      updateBar('HomeController.Increment()', 'Home', 'UserModel');
     },
     reset() {
-      Model.navigation.visitCount = 0;
-      document.getElementById('visit-count').textContent = 0;
-    },
-    render() {
-      document.getElementById('home-name').textContent    = Model.user.name;
-      document.getElementById('home-uni').textContent     = Model.user.uni;
-      document.getElementById('home-dept').textContent    = Model.user.dept;
-      document.getElementById('home-active-view').textContent = 'Home';
-      document.getElementById('visit-count').textContent  = Model.navigation.visitCount;
+      UserModel.visitCount = 0;
+      HomeView.render(UserModel);
+      updateBar('HomeController.Reset()', 'Home', 'UserModel');
     }
   };
 
-  // ════════════════════════════════
-  // ABOUT CONTROLLER
-  // ════════════════════════════════
   const AboutController = {
     index() {
-      Model.navigation.current = 'about';
-      Model.navigation.visitCount++;
-      this.render();
-      updateBar('AboutController.Index()', 'about', 'AboutModel { skills[], timeline[] }');
-    },
-    render() {
-      const list = document.getElementById('skill-list');
-      list.innerHTML = Model.about.skills
-        .map(s => `<li>${s}</li>`)
-        .join('');
+      // modeli değiştirmeye gerek yok, sadece oku
+      // return View(AboutModel)
+      AboutView.render(AboutModel);
+      updateBar('AboutController.Index()', 'About', 'AboutModel');
     }
   };
 
-  // ════════════════════════════════
-  // CONTACT CONTROLLER
-  // ════════════════════════════════
   const ContactController = {
     index() {
-      Model.navigation.current = 'contact';
-      Model.navigation.visitCount++;
-      document.getElementById('contact-success').classList.remove('show');
-      updateBar('ContactController.Index()', 'contact', 'ContactModel { name, email, subject, message }');
+      ContactModel.submitted = false;
+      // return View(ContactModel)
+      ContactView.render(ContactModel);
+      updateBar('ContactController.Index()', 'Contact', 'ContactModel');
     },
     submit() {
       const name    = document.getElementById('f-name').value.trim();
@@ -781,53 +821,46 @@
         return;
       }
 
-      // Controller modeli gunceller
-      Model.contact.submitted = true;
-      Model.contact.lastMessage = { name, email, subject, message };
+      // modeli güncelle
+      ContactModel.name    = name;
+      ContactModel.email   = email;
+      ContactModel.subject = subject;
+      ContactModel.message = message;
+      ContactModel.submitted = true;
 
-      // View'i guncelle
-      document.getElementById('contact-success').classList.add('show');
-      document.getElementById('f-name').value    = '';
-      document.getElementById('f-email').value   = '';
-      document.getElementById('f-subject').value = '';
-      document.getElementById('f-message').value = '';
-
-      updateBar('ContactController.Submit(ContactModel)', 'contact', `ContactModel { submitted: true, from: "${name}" }`);
+      // return View(ContactModel)
+      ContactView.render(ContactModel);
+      updateBar('ContactController.Submit(ContactModel)', 'Contact', `ContactModel { submitted: true, from: "${name}" }`);
     }
   };
 
-  // ════════════════════════════════
-  // PRIVACY CONTROLLER
-  // ════════════════════════════════
   const PrivacyController = {
     index() {
-      Model.navigation.current = 'privacy';
-      Model.navigation.visitCount++;
-      this.render();
-      updateBar('PrivacyController.Index()', 'privacy', 'PrivacyModel { analytics, cookies, email }');
+      // return View(PrivacyModel)
+      PrivacyView.render(PrivacyModel);
+      updateBar('PrivacyController.Index()', 'Privacy', 'PrivacyModel');
     },
     update(key, value) {
-      Model.privacy[key] = value;
-      updateBar(`PrivacyController.Update("${key}", ${value})`, 'privacy',
-        `PrivacyModel { analytics:${Model.privacy.analytics}, cookies:${Model.privacy.cookies}, email:${Model.privacy.email} }`);
+      // modeli güncelle
+      PrivacyModel[key] = value;
+      // return View(PrivacyModel)  — burada view zaten toggle ile güncel,
+      // ama model değişikliğini bar'a yansıt
+      updateBar(`PrivacyController.Update("${key}", ${value})`, 'Privacy', 'PrivacyModel');
     },
     save() {
-      const el = document.getElementById('save-confirm');
-      el.classList.add('show');
-      setTimeout(() => el.classList.remove('show'), 2000);
-      updateBar('PrivacyController.Save(PrivacyModel)', 'privacy', 'PrivacyModel kaydedildi.');
-    },
-    render() {
-      document.getElementById('pref-analytics').checked = Model.privacy.analytics;
-      document.getElementById('pref-cookies').checked   = Model.privacy.cookies;
-      document.getElementById('pref-email').checked     = Model.privacy.email;
+      // return View(PrivacyModel)
+      PrivacyView.render(PrivacyModel);
+      PrivacyView.showSaved();
+      updateBar('PrivacyController.Save(PrivacyModel)', 'Privacy', 'PrivacyModel kaydedildi');
     }
   };
 
-  // ════════════════════════════════
-  // ROUTER — navigate()
-  // ════════════════════════════════
-  const controllers = {
+  // ════════════════════════════════════════════════════════
+  // ROUTER
+  // Hangi URL (sekme) hangi controller'a gidecek.
+  // ASP.NET'te bu routing middleware'in işi.
+  // ════════════════════════════════════════════════════════
+  const routes = {
     home:    HomeController,
     about:   AboutController,
     contact: ContactController,
@@ -835,16 +868,16 @@
   };
 
   function navigate(viewName, linkEl) {
-    // Sidebar aktif link
+    // Sidebar aktif link güncelle
     document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
     if (linkEl) linkEl.classList.add('active');
 
-    // View goster/gizle
+    // Doğru view panelini göster
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + viewName).classList.add('active');
 
-    // Controller cagir
-    controllers[viewName].index();
+    // İlgili controller'ın index() action'ını çağır
+    routes[viewName].index();
   }
 
   function updateBar(controller, view, model) {
@@ -853,7 +886,7 @@
     document.getElementById('bar-model').textContent      = model;
   }
 
-  // Sayfa acilisinda Home controller calis
+  // Sayfa açılışında: /home rotası → HomeController.Index()
   HomeController.index();
 </script>
 </body>
